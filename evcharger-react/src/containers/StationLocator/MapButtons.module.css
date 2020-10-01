@@ -1,0 +1,12 @@
+.mapbuttons {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+
+.mapbuttons div {
+  padding: 10px;
+  margin: 0;
+  left: 0;
+}

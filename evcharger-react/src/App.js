@@ -1,12 +1,12 @@
 import React from "react";
 import Layout from "./components/Layout/Layout";
-import ChargerLocator from "./containers/ChargerLocator/ChargerLocator";
+import StationLocator from "./containers/StationLocator/StationLocator";
 
 function App() {
   return (
     <div className="App">
       <Layout>
-        <ChargerLocator />
+        <StationLocator />
       </Layout>
     </div>
   );
