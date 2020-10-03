@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Layout = ({ children }) => (
-  <>
-    <div>Toolbar, SideDrawer, Backdrop</div>
-    <main>{children}</main>
-  </>
-);
+import Toolbar from "../Navigation/Toolbar/Toolbar";
+import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
+
+import classes from "./Layout.module.css";
+
+const Layout = ({ children }) => {
+  const [showSideDrawer, setShowSideDrawer] = useState(true);
+
+  const sideDrawerClosedHandler = () => {
+    setShowSideDrawer(false);
+  };
+
+  const togglerClickedHandler = () => {
+    setShowSideDrawer(true);
+  };
+
+  return (
+    <>
+      <Toolbar
+        toggler={showSideDrawer}
+        togglerClicked={togglerClickedHandler}
+      />
+      <SideDrawer open={showSideDrawer} closed={sideDrawerClosedHandler} />
+      <main className={classes.content}>{children}</main>
+    </>
+  );
+};
 
 export default Layout;
