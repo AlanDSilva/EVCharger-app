@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import stations from "../../stations";
-import distance from "@turf/distance";
 
 import classes from "./StationLocator.module.css";
 
 import Map from "./Map";
 import List from "./List";
+import Modal from "../UI/Modal/Modal";
 
 const ChargerLocator = () => {
   const [viewport, setViewport] = useState({
@@ -17,6 +17,7 @@ const ChargerLocator = () => {
   });
   const [selectedStation, setSelectedStation] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
+  const [viewModal, setViewModal] = useState(false);
 
   // useEffect(() => {
   //   const from = userLocation
@@ -52,9 +53,16 @@ const ChargerLocator = () => {
     setSelectedStation(station);
   };
 
+  const closeModalHandler = () => {
+    setViewModal(false);
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.half}>
+        <Modal show={viewModal} modalClosed={closeModalHandler}>
+          <h1>This is the modal</h1>
+        </Modal>
         <Map
           viewport={viewport}
           selectedStation={selectedStation}
@@ -74,6 +82,7 @@ const ChargerLocator = () => {
           handleClick={listClickHandler}
         />
       </div>
+      <button onClick={() => setViewModal(true)}>Show Modal</button>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 
 const Layout = ({ children }) => (
   <>
-    <div>Toolbar, SideDrawe, Backdrop</div>
+    <div>Toolbar, SideDrawer, Backdrop</div>
     <main>{children}</main>
   </>
 );
