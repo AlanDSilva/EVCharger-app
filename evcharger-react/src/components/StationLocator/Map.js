@@ -1,7 +1,6 @@
 import React from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import MapButtons from "./MapButtons";
-import classes from "./Map.module.css";
 
 const Map = ({
   viewport,
@@ -17,6 +16,7 @@ const Map = ({
       {...viewport}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       onViewportChange={changeHandler}
+      onClick={() => console.log("Map clicked")}
     >
       {stations.map((station) => (
         <Marker
