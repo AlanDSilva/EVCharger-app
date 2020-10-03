@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import stations from "../../stations";
-import distance from "@turf/distance";
 
 import classes from "./StationLocator.module.css";
 
 import Map from "./Map";
 import List from "./List";
+import Modal from "../UI/Modal/Modal";
+import Button from "../UI/Button/Button";
 
 const ChargerLocator = () => {
   const [viewport, setViewport] = useState({
@@ -17,6 +18,7 @@ const ChargerLocator = () => {
   });
   const [selectedStation, setSelectedStation] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
+  const [viewModal, setViewModal] = useState(false);
 
   // useEffect(() => {
   //   const from = userLocation
@@ -52,9 +54,26 @@ const ChargerLocator = () => {
     setSelectedStation(station);
   };
 
+  const cancelModalHandler = () => {
+    setViewModal(false);
+  };
+
+  const continueModalHandler = () => {
+    alert("You Continue!");
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.half}>
+        <Modal show={viewModal} modalClosed={cancelModalHandler}>
+          <h1>This is the modal</h1>
+          <Button btnType="danger" clicked={cancelModalHandler}>
+            Cancel
+          </Button>
+          <Button btnType="success" clicked={continueModalHandler}>
+            Continue
+          </Button>
+        </Modal>
         <Map
           viewport={viewport}
           selectedStation={selectedStation}
@@ -74,6 +93,7 @@ const ChargerLocator = () => {
           handleClick={listClickHandler}
         />
       </div>
+      <button onClick={() => setViewModal(true)}>Show Modal</button>
     </div>
   );
 };
