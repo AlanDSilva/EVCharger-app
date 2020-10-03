@@ -6,6 +6,7 @@ import classes from "./StationLocator.module.css";
 import Map from "./Map";
 import List from "./List";
 import Modal from "../UI/Modal/Modal";
+import Button from "../UI/Button/Button";
 
 const ChargerLocator = () => {
   const [viewport, setViewport] = useState({
@@ -53,15 +54,25 @@ const ChargerLocator = () => {
     setSelectedStation(station);
   };
 
-  const closeModalHandler = () => {
+  const cancelModalHandler = () => {
     setViewModal(false);
+  };
+
+  const continueModalHandler = () => {
+    alert("You Continue!");
   };
 
   return (
     <div className={classes.container}>
       <div className={classes.half}>
-        <Modal show={viewModal} modalClosed={closeModalHandler}>
+        <Modal show={viewModal} modalClosed={cancelModalHandler}>
           <h1>This is the modal</h1>
+          <Button btnType="danger" clicked={cancelModalHandler}>
+            Cancel
+          </Button>
+          <Button btnType="success" clicked={continueModalHandler}>
+            Continue
+          </Button>
         </Modal>
         <Map
           viewport={viewport}
