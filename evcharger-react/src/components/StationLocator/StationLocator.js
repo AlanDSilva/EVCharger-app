@@ -1,36 +1,39 @@
-import React, { useState } from "react";
-import stations from "../../stations";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+//import stations from "../../stations";
 
 import classes from "./StationLocator.module.css";
 
-import Map from "./Map";
-import List from "./List";
+import Map from "./Map/Map";
+import List from "./List/List";
 import Modal from "../UI/Modal/Modal";
 import Button from "../UI/Button/Button";
 
 const ChargerLocator = () => {
   const [viewport, setViewport] = useState({
-    latitude: 60.1699,
-    longitude: 24.9384,
+    latitude: 65.0121,
+    longitude: 25.4651,
     width: "100%",
     height: "300px",
-    zoom: 10,
+    zoom: 3,
   });
   const [selectedStation, setSelectedStation] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [viewModal, setViewModal] = useState(false);
+  const [stations, setStations] = useState([]);
+  const [chargers, setChargers] = useState([]);
 
-  // useEffect(() => {
-  //   const from = userLocation
-  //     ? [userLocation.latitude, userLocation.longitude]
-  //     : null;
-  //   const to = selectedStation
-  //     ? [selectedStation.latitude, selectedStation.longitude]
-  //     : null;
-  //   if (from && to) {
-  //     console.log(distance(from, to));
-  //   }
-  // }, [userLocation, selectedStation]);
+  useEffect(() => {
+    console.log("effect");
+    axios.get("http://localhost:3001/stations").then((response) => {
+      console.log("stations promise fulfilled");
+      setStations(response.data);
+    });
+    axios.get("http://localhost:3001/chargers").then((response) => {
+      console.log("chargers promise fulfilled");
+      setChargers(response.data);
+    });
+  }, []);
 
   const viewportChangeHandler = (viewport) => {
     viewport.width = "100%";
@@ -88,12 +91,13 @@ const ChargerLocator = () => {
       <div className={classes.half}>
         <List
           stations={stations}
+          chargers={chargers}
           userLocation={userLocation}
           selectedStation={selectedStation}
           handleClick={listClickHandler}
         />
       </div>
-      <button onClick={() => setViewModal(true)}>Show Modal</button>
+      {/* <button onClick={() => setViewModal(true)}>Show Modal</button> */}
     </div>
   );
 };
