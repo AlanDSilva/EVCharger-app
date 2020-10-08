@@ -6,11 +6,11 @@ const ListItem = ({ station, selected, distance, chargers }) => {
     <>
       <button className={classes.collapsible}>{station.city}</button>
       {selected ? (
-        <p className={classes.content}>
+        <div className={classes.content}>
           {chargers.map((charger) => (
-            <p>{charger.id}</p>
+            <p key={charger.id}>{charger.id}</p>
           ))}
-        </p>
+        </div>
       ) : null}
     </>
   );

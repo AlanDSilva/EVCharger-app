@@ -4,6 +4,7 @@ import axios from "axios";
 
 import classes from "./StationLocator.module.css";
 
+import Search from "./Search/Search";
 import Map from "./Map/Map";
 import List from "./List/List";
 import Modal from "../UI/Modal/Modal";
@@ -21,6 +22,7 @@ const ChargerLocator = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [viewModal, setViewModal] = useState(false);
   const [stations, setStations] = useState([]);
+  const [matched, setMatched] = useState([]);
   const [chargers, setChargers] = useState([]);
 
   useEffect(() => {
@@ -28,6 +30,7 @@ const ChargerLocator = () => {
     axios.get("http://localhost:3001/stations").then((response) => {
       console.log("stations promise fulfilled");
       setStations(response.data);
+      setMatched(response.data);
     });
     axios.get("http://localhost:3001/chargers").then((response) => {
       console.log("chargers promise fulfilled");
@@ -65,8 +68,16 @@ const ChargerLocator = () => {
     alert("You Continue!");
   };
 
+  const searchChangedHandler = (event) => {
+    var results = stations.filter((station) =>
+      station.city.toLowerCase().includes(event.target.value.toLowerCase())
+    );
+    setMatched(results);
+  };
+
   return (
     <div className={classes.container}>
+      <Search changed={searchChangedHandler} />
       <div className={classes.half}>
         <Modal show={viewModal} modalClosed={cancelModalHandler}>
           <h1>This is the modal</h1>
@@ -82,7 +93,7 @@ const ChargerLocator = () => {
           selectedStation={selectedStation}
           userLocation={userLocation}
           changeHandler={viewportChangeHandler}
-          stations={stations}
+          stations={matched}
           clickHandler={markerClickHandler}
           closeHandler={closePopupHandler}
           geoHandler={handleGeolocationChange}
@@ -90,7 +101,7 @@ const ChargerLocator = () => {
       </div>
       <div className={classes.half}>
         <List
-          stations={stations}
+          stations={matched}
           chargers={chargers}
           userLocation={userLocation}
           selectedStation={selectedStation}
