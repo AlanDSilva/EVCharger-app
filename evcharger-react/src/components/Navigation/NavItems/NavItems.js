@@ -6,10 +6,8 @@ import classes from "./NavItems.module.css";
 
 const NavItems = () => (
   <ul className={classes.navItems}>
-    <NavItem link="/" active>
-      Station Locator
-    </NavItem>
-    <NavItem link="/">About</NavItem>
+    <NavItem link="/">Station Locator</NavItem>
+    <NavItem link="/charge">Charge</NavItem>
   </ul>
 );
 
