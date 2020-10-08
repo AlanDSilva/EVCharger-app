@@ -5,6 +5,7 @@ const port = 3001;
 
 const stationComponent = require("./components/stations");
 const chargerComponent = require("./components/chargers");
+const userComponent = require("./components/users");
 
 // Middleware
 app.use(cors());
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
 
 app.use("/stations", stationComponent);
 app.use("/chargers", chargerComponent);
+app.use("/users", userComponent);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

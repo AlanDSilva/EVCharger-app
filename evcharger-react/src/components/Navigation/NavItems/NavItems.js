@@ -8,6 +8,7 @@ const NavItems = () => (
   <ul className={classes.navItems}>
     <NavItem link="/">Station Locator</NavItem>
     <NavItem link="/charge">Charge</NavItem>
+    <NavItem link="/login">Login</NavItem>
   </ul>
 );
 
