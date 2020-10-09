@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div className="App">
-      <Layout>
+      <Layout isAuthenticated={isAuthenticated} userInfo={userInfo}>
         <Route path="/" exact component={StationLocator} />
         <Route
           path="/charge"

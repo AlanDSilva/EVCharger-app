@@ -5,7 +5,7 @@ import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
 
 import classes from "./Layout.module.css";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, isAuthenticated, userInfo }) => {
   const [showSideDrawer, setShowSideDrawer] = useState(false);
 
   const sideDrawerClosedHandler = () => {
@@ -19,6 +19,8 @@ const Layout = ({ children }) => {
   return (
     <>
       <Toolbar
+        isAuthenticated={isAuthenticated}
+        userInfo={userInfo}
         toggler={showSideDrawer}
         togglerClicked={togglerClickedHandler}
       />

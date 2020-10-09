@@ -11,7 +11,10 @@ const Toolbar = (props) => (
 
     <div>Logo</div>
     <nav className={classes.desktopOnly}>
-      <NavItems />
+      <NavItems
+        isAuthenticated={props.isAuthenticated}
+        userInfo={props.userInfo}
+      />
     </nav>
   </header>
 );
