@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import StationLocator from "./components/StationLocator/StationLocator";
@@ -8,6 +8,27 @@ import Login from "./components/Login/Login";
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    let interval = null;
+
+    if (isActive) {
+      interval = setInterval(() => {
+        setSeconds(seconds + 1);
+      }, 1000);
+    } else if (!isActive && seconds !== 0) {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [isActive, seconds]);
+
+  const toggle = () => {
+    setIsActive(!isActive);
+  };
 
   const onLogin = (userInfo) => {
     setAuthenticated(true);
@@ -27,7 +48,14 @@ function App() {
         <Route path="/" exact component={StationLocator} />
         <Route
           path="/charge"
-          render={(routeProps) => <Charge isAuthenticated={isAuthenticated} />}
+          render={(routeProps) => (
+            <Charge
+              isAuthenticated={isAuthenticated}
+              isActive={isActive}
+              seconds={seconds}
+              toggle={toggle}
+            />
+          )}
         />
         <Route
           path="/login"
