@@ -14,6 +14,10 @@
   padding-left: 0;
 }
 
+button:disabled {
+  color: gray;
+}
+
 .normal {
   color: black;
 }
