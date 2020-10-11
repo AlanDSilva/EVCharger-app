@@ -74,15 +74,12 @@ const Signup = (props) => {
       updatedSignupElement.validation
     );
     updatedSignupForm[inputID] = updatedSignupElement;
-    console.log(updatedSignupElement);
 
     let formIsValid = true;
     for (let inputIDs in updatedSignupForm) {
       formIsValid = updatedSignupForm[inputIDs].valid && formIsValid;
     }
     setFormValidity(formIsValid);
-    console.log(formIsValid);
-
     setSignupForm(updatedSignupForm);
   };
 

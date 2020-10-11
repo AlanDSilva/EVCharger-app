@@ -57,14 +57,12 @@ const Login = (props) => {
       updatedLoginElement.validation
     );
     updatedLoginForm[inputID] = updatedLoginElement;
-    console.log(updatedLoginElement);
 
     let formIsValid = true;
     for (let inputIDs in updatedLoginForm) {
       formIsValid = updatedLoginForm[inputIDs].valid && formIsValid;
     }
     setFormValidity(formIsValid);
-    console.log(formIsValid);
 
     setLoginForm(updatedLoginForm);
   };

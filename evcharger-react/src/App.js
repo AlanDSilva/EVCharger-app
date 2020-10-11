@@ -59,20 +59,13 @@ function App() {
           )}
         />
         <Route
-          path="/login"
-          render={(routeProps) => (
-            <Login
-              loginSuccess={onLogin}
-              loginFail={onLoginFail}
-              redirectPathOnSuccess="/charge"
-              {...routeProps}
-            />
-          )}
-        />
-        <Route
           path="/account"
           render={() => (
-            <Account loginSuccess={onLogin} loginFail={onLoginFail} />
+            <Account
+              loginSuccess={onLogin}
+              loginFail={onLoginFail}
+              isAuthenticated={isAuthenticated}
+            />
           )}
         />
       </Layout>
