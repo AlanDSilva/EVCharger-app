@@ -1,15 +1,28 @@
 import React, { useState } from "react";
-import Auth from "../ProtectedRoute/Auth";
-import Input from "../UI/Input/Input";
-import Button from "../UI/Button/Button";
+import Auth from "../../ProtectedRoute/Auth";
+import Input from "../../UI/Input/Input";
+import Button from "../../UI/Button/Button";
 
-const Login = (props) => {
-  const [loginForm, setLoginForm] = useState({
+const Signup = (props) => {
+  const [signupForm, setSignupForm] = useState({
     name: {
       elementType: "input",
       elementConfig: {
         type: "text",
         placeholder: "Your Username",
+      },
+      value: "",
+      validation: {
+        required: true,
+      },
+      valid: false,
+      touched: false,
+    },
+    email: {
+      elementType: "input",
+      elementConfig: {
+        type: "text",
+        placeholder: "Your E-mail",
       },
       value: "",
       validation: {
@@ -34,39 +47,43 @@ const Login = (props) => {
   });
   const [formValidity, setFormValidity] = useState(false);
 
-  const loginHandler = (event) => {
+  const signupHandler = (event) => {
     event.preventDefault();
 
-    Auth.authenticate(loginForm.name.value, loginForm.password.value)
+    Auth.signup(
+      signupForm.name.value,
+      signupForm.email.value,
+      signupForm.password.value
+    )
       .then((result) => {
         props.loginSuccess(Auth.getAxiosAuth());
         props.history.push(props.redirectPathOnSuccess);
       })
-      .catch(() => {
+      .catch((error) => {
         props.loginFail();
       });
   };
 
   const inputChangedHandler = (event, inputID) => {
-    const updatedLoginForm = { ...loginForm };
-    const updatedLoginElement = { ...updatedLoginForm[inputID] };
-    updatedLoginElement.value = event.target.value;
-    updatedLoginElement.touched = true;
-    updatedLoginElement.valid = checkValidity(
-      updatedLoginElement.value,
-      updatedLoginElement.validation
+    const updatedSignupForm = { ...signupForm };
+    const updatedSignupElement = { ...updatedSignupForm[inputID] };
+    updatedSignupElement.value = event.target.value;
+    updatedSignupElement.touched = true;
+    updatedSignupElement.valid = checkValidity(
+      updatedSignupElement.value,
+      updatedSignupElement.validation
     );
-    updatedLoginForm[inputID] = updatedLoginElement;
-    console.log(updatedLoginElement);
+    updatedSignupForm[inputID] = updatedSignupElement;
+    console.log(updatedSignupElement);
 
     let formIsValid = true;
-    for (let inputIDs in updatedLoginForm) {
-      formIsValid = updatedLoginForm[inputIDs].valid && formIsValid;
+    for (let inputIDs in updatedSignupForm) {
+      formIsValid = updatedSignupForm[inputIDs].valid && formIsValid;
     }
     setFormValidity(formIsValid);
     console.log(formIsValid);
 
-    setLoginForm(updatedLoginForm);
+    setSignupForm(updatedSignupForm);
   };
 
   const checkValidity = (value, rules) => {
@@ -79,15 +96,15 @@ const Login = (props) => {
   };
 
   const formArray = [];
-  for (let key in loginForm) {
+  for (let key in signupForm) {
     formArray.push({
       id: key,
-      config: loginForm[key],
+      config: signupForm[key],
     });
   }
 
   let form = (
-    <form onSubmit={loginHandler}>
+    <form onSubmit={signupHandler}>
       {formArray.map((element) => (
         <Input
           key={element.id}
@@ -107,12 +124,11 @@ const Login = (props) => {
 
   return (
     <div>
-      <h1>Login</h1>
-      <div>Please give your username and password to login</div>
-
+      <h1>Signup page</h1>
+      <p>Please fill the bellow form to register</p>
       {form}
     </div>
   );
 };
 
-export default Login;
+export default Signup;

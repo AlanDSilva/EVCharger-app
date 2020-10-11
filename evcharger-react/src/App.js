@@ -3,7 +3,8 @@ import { Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import StationLocator from "./components/StationLocator/StationLocator";
 import Charge from "./components/Charge/Charge";
-import Login from "./components/Login/Login";
+import Account from "./components/Account/Account";
+import Login from "./components/Account/Login/Login";
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -45,7 +46,7 @@ function App() {
   return (
     <div className="App">
       <Layout isAuthenticated={isAuthenticated} userInfo={userInfo}>
-        <Route path="/" exact component={StationLocator} />
+        <Route path="/locator" component={StationLocator} />
         <Route
           path="/charge"
           render={(routeProps) => (
@@ -68,12 +69,12 @@ function App() {
             />
           )}
         />
-        {/* <ProtectedRoute
-          isAuthenticated={isAuthenticated}
-          exact
-          path="/charge"
-          component={Charge}
-        /> */}
+        <Route
+          path="/account"
+          render={() => (
+            <Account loginSuccess={onLogin} loginFail={onLoginFail} />
+          )}
+        />
       </Layout>
     </div>
   );

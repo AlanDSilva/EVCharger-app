@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Route } from "react-router-dom";
+import NavItem from "../Navigation/NavItems/NavItem/NavItem";
 import axios from "axios";
 //import stations from "../../stations";
 
@@ -7,8 +9,6 @@ import classes from "./StationLocator.module.css";
 import Search from "./Search/Search";
 import Map from "./Map/Map";
 import List from "./List/List";
-import Modal from "../UI/Modal/Modal";
-import Button from "../UI/Button/Button";
 
 const ChargerLocator = () => {
   const [viewport, setViewport] = useState({
@@ -20,7 +20,6 @@ const ChargerLocator = () => {
   });
   const [selectedStation, setSelectedStation] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
-  const [viewModal, setViewModal] = useState(false);
   const [stations, setStations] = useState([]);
   const [matched, setMatched] = useState([]);
   const [chargers, setChargers] = useState([]);
@@ -60,14 +59,6 @@ const ChargerLocator = () => {
     setSelectedStation(station);
   };
 
-  const cancelModalHandler = () => {
-    setViewModal(false);
-  };
-
-  const continueModalHandler = () => {
-    alert("You Continue!");
-  };
-
   const searchChangedHandler = (event) => {
     var results = stations.filter((station) =>
       station.city.toLowerCase().includes(event.target.value.toLowerCase())
@@ -77,38 +68,41 @@ const ChargerLocator = () => {
 
   return (
     <div className={classes.container}>
+      <div className={classes.tabs}>
+        <NavItem link="/locator/map">Map View</NavItem>
+        <NavItem link="/locator/list">ListView</NavItem>
+      </div>
       <Search changed={searchChangedHandler} />
-      <div className={classes.half}>
-        <Modal show={viewModal} modalClosed={cancelModalHandler}>
-          <h1>This is the modal</h1>
-          <Button btnType="danger" clicked={cancelModalHandler}>
-            Cancel
-          </Button>
-          <Button btnType="success" clicked={continueModalHandler}>
-            Continue
-          </Button>
-        </Modal>
-        <Map
-          viewport={viewport}
-          selectedStation={selectedStation}
-          userLocation={userLocation}
-          changeHandler={viewportChangeHandler}
-          stations={matched}
-          clickHandler={markerClickHandler}
-          closeHandler={closePopupHandler}
-          geoHandler={handleGeolocationChange}
-        />
-      </div>
-      <div className={classes.half}>
-        <List
-          stations={matched}
-          chargers={chargers}
-          userLocation={userLocation}
-          selectedStation={selectedStation}
-          handleClick={listClickHandler}
-        />
-      </div>
-      {/* <button onClick={() => setViewModal(true)}>Show Modal</button> */}
+
+      <Route
+        exact
+        path="/locator/map"
+        render={() => (
+          <Map
+            viewport={viewport}
+            selectedStation={selectedStation}
+            userLocation={userLocation}
+            changeHandler={viewportChangeHandler}
+            stations={matched}
+            clickHandler={markerClickHandler}
+            closeHandler={closePopupHandler}
+            geoHandler={handleGeolocationChange}
+          />
+        )}
+      />
+      <Route
+        exact
+        path="/locator/list"
+        render={() => (
+          <List
+            stations={matched}
+            chargers={chargers}
+            userLocation={userLocation}
+            selectedStation={selectedStation}
+            handleClick={listClickHandler}
+          />
+        )}
+      />
     </div>
   );
 };

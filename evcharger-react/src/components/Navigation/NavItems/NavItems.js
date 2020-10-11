@@ -6,10 +6,14 @@ import classes from "./NavItems.module.css";
 
 const NavItems = (props) => (
   <ul className={classes.navItems}>
-    <NavItem link="/">Station Locator</NavItem>
+    <NavItem link="/locator">Station Locator</NavItem>
     <NavItem link="/charge">Charge</NavItem>
-    <NavItem link="/login">
-      {props.isAuthenticated ? `Logged in as ` : "Login"}
+    <NavItem link="/account">
+      {props.isAuthenticated
+        ? props.userInfo
+          ? `Logged in as ${props.userInfo.auth.username}`
+          : "Account"
+        : "Account"}
     </NavItem>
   </ul>
 );

@@ -32,6 +32,27 @@ let myAuth = {
         });
     });
   },
+  signup: (username, email, password) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post("http://localhost:3001/users/", {
+          username: username,
+          email: email,
+          password: password,
+        })
+        .then((result) => {
+          userInfo = {
+            username: username,
+            password: password,
+          };
+          resolve();
+        })
+        .catch((error) => {
+          console.log(error);
+          reject();
+        });
+    });
+  },
   getAxiosAuth: () => {
     return {
       auth: userInfo,
