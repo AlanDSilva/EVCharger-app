@@ -8,7 +8,12 @@ const ListItem = ({ station, selected, distance, chargers }) => {
       {selected ? (
         <div className={classes.content}>
           {chargers.map((charger) => (
-            <p key={charger.id}>{charger.id}</p>
+            <div key={charger.id} className={classes.row}>
+              <p>{charger.id}</p>
+              <p>{charger.type === "slow" ? "Type 2" : "CCS"}</p>
+              <p>{charger.price}€</p>
+              <p>{charger.busy ? "Busy" : "Free"}</p>
+            </div>
           ))}
         </div>
       ) : null}

@@ -4,3 +4,8 @@
   margin: 20px 0;
   box-sizing: border-box;
 }
+
+.row {
+  display: flex;
+  justify-content: space-around;
+}

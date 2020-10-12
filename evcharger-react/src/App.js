@@ -4,7 +4,6 @@ import Layout from "./components/Layout/Layout";
 import StationLocator from "./components/StationLocator/StationLocator";
 import Charge from "./components/Charge/Charge";
 import Account from "./components/Account/Account";
-import Login from "./components/Account/Login/Login";
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);

@@ -23,6 +23,7 @@ const ChargerLocator = () => {
   const [stations, setStations] = useState([]);
   const [matched, setMatched] = useState([]);
   const [chargers, setChargers] = useState([]);
+  const [matchedChargers, setMatchedChargers] = useState([]);
 
   useEffect(() => {
     console.log("effect");
@@ -34,8 +35,21 @@ const ChargerLocator = () => {
     axios.get("http://localhost:3001/chargers").then((response) => {
       console.log("chargers promise fulfilled");
       setChargers(response.data);
+      setMatchedChargers(response.data);
     });
   }, []);
+
+  const updateMatchedChargers = (form) => {
+    let results = chargers;
+    for (let key in form) {
+      if (form[key].value !== "")
+        results = results.filter(
+          (result) => String(result[key]) === form[key].value
+        );
+      else console.log(`${key} is null`);
+    }
+    setMatchedChargers(results);
+  };
 
   const viewportChangeHandler = (viewport) => {
     viewport.width = "100%";
@@ -72,7 +86,8 @@ const ChargerLocator = () => {
         <NavItem link="/locator/map">Map View</NavItem>
         <NavItem link="/locator/list">ListView</NavItem>
       </div>
-      <Search changed={searchChangedHandler} />
+      <Search changed={searchChangedHandler} filtered={updateMatchedChargers} />
+      {/* {form} */}
 
       <Route
         exact
@@ -96,7 +111,7 @@ const ChargerLocator = () => {
         render={() => (
           <List
             stations={matched}
-            chargers={chargers}
+            chargers={matchedChargers}
             userLocation={userLocation}
             selectedStation={selectedStation}
             handleClick={listClickHandler}
