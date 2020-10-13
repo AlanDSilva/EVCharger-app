@@ -11,9 +11,18 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  console.log(req.body);
-
+  var date = new Date();
+  receiptData.push({
+    ...req.body,
+    date,
+  });
   res.sendStatus(200);
+});
+
+router.get("/:userId", (req, res) => {
+  const userId = req.params.userId;
+  const result = receiptData.filter((receipt) => receipt.user_id === userId);
+  res.json(result);
 });
 
 module.exports = router;

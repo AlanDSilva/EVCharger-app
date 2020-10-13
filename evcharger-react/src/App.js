@@ -12,6 +12,7 @@ function App() {
 
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
+  const [price, setPrice] = useState(0);
   const [total, setTotal] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
@@ -39,7 +40,7 @@ function App() {
         if ((seconds + 1) % 10 === 0) {
           setMinutes((m) => m + 1);
           setSeconds(0);
-          setTotal((t) => t + t);
+          setTotal((t) => t + price);
         }
       }, 1000);
     } else if (!isActive && seconds !== 0) {
@@ -50,8 +51,19 @@ function App() {
   }, [isActive, seconds]);
 
   const toggle = (price) => {
-    setIsActive(!isActive);
-    setTotal(price);
+    if (price === null) {
+      setIsActive(!isActive);
+    } else {
+      setIsActive(!isActive);
+      setPrice(price);
+    }
+  };
+
+  const reset = () => {
+    setPrice(0);
+    setTotal(0);
+    setSeconds(0);
+    setMinutes(0);
   };
 
   const onLogin = (userInfo) => {
@@ -84,6 +96,7 @@ function App() {
               seconds={seconds}
               minutes={minutes}
               toggle={toggle}
+              reset={reset}
               chargers={chargers}
               total={total}
             />

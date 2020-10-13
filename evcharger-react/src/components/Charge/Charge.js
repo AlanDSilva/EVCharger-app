@@ -27,21 +27,42 @@ const Charge = (props) => {
   const [viewModal, setViewModal] = useState(false);
   const cancelModalHandler = () => {
     setViewModal(false);
+    toggle(null);
   };
   const continueModalHandler = () => {
     console.log(Auth.getAxiosAuth().auth.id);
+    setViewModal(false);
+    const newReceipt = {
+      total: props.total,
+      user_id: Auth.getAxiosAuth().auth.id,
+      charger_id: chargeInput.value,
+    };
+    axios
+      .post("http://localhost:3001/receipts/", newReceipt)
+      .then((response) => {
+        console.log(response.data);
+        props.reset();
+      });
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if (!isActive) {
+    if (isActive) {
       setViewModal(true);
+      toggle(null);
+      axios
+        .post(`http://localhost:3001/chargers/${chargeInput.value}`)
+        .then((response) => {
+          console.log(response.data);
+        });
+    } else {
+      axios
+        .post(`http://localhost:3001/chargers/${chargeInput.value}`)
+        .then((response) => {
+          toggle(response.data.price);
+          console.log(response.data);
+        });
     }
-    axios
-      .post(`http://localhost:3001/chargers/${chargeInput.value}`)
-      .then((response) => {
-        console.log(response.data);
-      });
   };
 
   const inputChangedHandler = (event) => {
@@ -82,10 +103,10 @@ const Charge = (props) => {
         invalid={!chargeInput.valid}
         message={chargeInput.message}
         changed={inputChangedHandler}
+        isActive={isActive}
       />
       <Button
         disabled={!props.isAuthenticated || !chargeInput.valid}
-        clicked={() => toggle(0.5)}
         btnType={isActive ? "danger" : "success"}
       >
         {isActive ? "Stop Charging" : "Start Charging"}

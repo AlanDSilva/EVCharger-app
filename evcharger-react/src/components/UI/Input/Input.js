@@ -19,6 +19,7 @@ const Input = (props) => {
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
+          disabled={props.isActive}
         />
       );
       break;
