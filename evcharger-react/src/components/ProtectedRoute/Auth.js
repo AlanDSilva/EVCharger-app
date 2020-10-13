@@ -20,10 +20,7 @@ let myAuth = {
           }
         )
         .then((result) => {
-          userInfo = {
-            username: username,
-            password: password,
-          };
+          userInfo = result.data;
           resolve();
         })
         .catch((error) => {
@@ -41,10 +38,7 @@ let myAuth = {
           password: password,
         })
         .then((result) => {
-          userInfo = {
-            username: username,
-            password: password,
-          };
+          userInfo = result.data;
           resolve();
         })
         .catch((error) => {

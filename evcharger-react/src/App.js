@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import StationLocator from "./components/StationLocator/StationLocator";
@@ -10,7 +11,24 @@ function App() {
   const [userInfo, setUserInfo] = useState(null);
 
   const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [total, setTotal] = useState(0);
   const [isActive, setIsActive] = useState(false);
+
+  const [stations, setStations] = useState([]);
+  const [chargers, setChargers] = useState([]);
+
+  useEffect(() => {
+    console.log("effect");
+    axios.get("http://localhost:3001/stations").then((response) => {
+      console.log("stations promise fulfilled");
+      setStations(response.data);
+    });
+    axios.get("http://localhost:3001/chargers").then((response) => {
+      console.log("chargers promise fulfilled");
+      setChargers(response.data);
+    });
+  }, []);
 
   useEffect(() => {
     let interval = null;
@@ -18,6 +36,11 @@ function App() {
     if (isActive) {
       interval = setInterval(() => {
         setSeconds(seconds + 1);
+        if ((seconds + 1) % 10 === 0) {
+          setMinutes((m) => m + 1);
+          setSeconds(0);
+          setTotal((t) => t + t);
+        }
       }, 1000);
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval);
@@ -26,8 +49,9 @@ function App() {
     return () => clearInterval(interval);
   }, [isActive, seconds]);
 
-  const toggle = () => {
+  const toggle = (price) => {
     setIsActive(!isActive);
+    setTotal(price);
   };
 
   const onLogin = (userInfo) => {
@@ -45,7 +69,12 @@ function App() {
   return (
     <div className="App">
       <Layout isAuthenticated={isAuthenticated} userInfo={userInfo}>
-        <Route path="/locator" component={StationLocator} />
+        <Route
+          path="/locator"
+          render={() => (
+            <StationLocator stations={stations} chargers={chargers} />
+          )}
+        />
         <Route
           path="/charge"
           render={(routeProps) => (
@@ -53,7 +82,10 @@ function App() {
               isAuthenticated={isAuthenticated}
               isActive={isActive}
               seconds={seconds}
+              minutes={minutes}
               toggle={toggle}
+              chargers={chargers}
+              total={total}
             />
           )}
         />

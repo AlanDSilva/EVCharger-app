@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import NavItem from "../Navigation/NavItems/NavItem/NavItem";
-import axios from "axios";
-//import stations from "../../stations";
 
 import classes from "./StationLocator.module.css";
 
@@ -10,7 +8,8 @@ import Search from "./Search/Search";
 import Map from "./Map/Map";
 import List from "./List/List";
 
-const ChargerLocator = () => {
+const ChargerLocator = (props) => {
+  const { stations, chargers } = props;
   const [viewport, setViewport] = useState({
     latitude: 65.0121,
     longitude: 25.4651,
@@ -20,24 +19,14 @@ const ChargerLocator = () => {
   });
   const [selectedStation, setSelectedStation] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
-  const [stations, setStations] = useState([]);
   const [matched, setMatched] = useState([]);
-  const [chargers, setChargers] = useState([]);
   const [matchedChargers, setMatchedChargers] = useState([]);
 
   useEffect(() => {
-    console.log("effect");
-    axios.get("http://localhost:3001/stations").then((response) => {
-      console.log("stations promise fulfilled");
-      setStations(response.data);
-      setMatched(response.data);
-    });
-    axios.get("http://localhost:3001/chargers").then((response) => {
-      console.log("chargers promise fulfilled");
-      setChargers(response.data);
-      setMatchedChargers(response.data);
-    });
-  }, []);
+    console.log("station locator effect");
+    setMatched(stations);
+    setMatchedChargers(chargers);
+  }, [stations, chargers]);
 
   const updateMatchedChargers = (form) => {
     let results = chargers;

@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const { v4: uuidv4 } = require("uuid");
 const passport = require("passport");
 const passportHttp = require("passport-http");
+const { resolveNaptr } = require("dns");
 
 router.use(bodyParser.json());
 
@@ -22,18 +23,16 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  console.log(req.body);
-
   const passHash = bcrypt.hashSync(req.body.password, 8);
-
-  users.push({
+  const newUser = {
     id: uuidv4(),
     username: req.body.username,
     password: passHash,
     email: req.body.email,
-  });
+  };
+  users.push(newUser);
 
-  res.sendStatus(200);
+  res.json(newUser);
 });
 
 passport.use(
@@ -51,13 +50,11 @@ passport.use(
   })
 );
 
-router.post(
-  "/login",
-  passport.authenticate("basic", { session: false }),
-  (req, res) => {
-    console.log(req.user);
-    res.sendStatus(200);
-  }
-);
+router.post("/login", function (req, res) {
+  passport.authenticate("basic", function (err, user, info) {
+    console.log(user);
+    res.send(user);
+  })(req, res);
+});
 
 module.exports = router;

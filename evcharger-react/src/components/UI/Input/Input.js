@@ -3,10 +3,12 @@ import classes from "./Input.module.css";
 
 const Input = (props) => {
   let inputElement = null;
+  let message = null;
   const inputClasses = [classes.inputElement];
 
   if (props.invalid && props.touched) {
     inputClasses.push(classes.invalid);
+    message = props.message;
   }
 
   switch (props.elementType) {
@@ -59,6 +61,7 @@ const Input = (props) => {
     <div className={classes.input}>
       <label className={classes.label}>{props.label}</label>
       {inputElement}
+      <p className={classes.message}>{message}</p>
     </div>
   );
 };
