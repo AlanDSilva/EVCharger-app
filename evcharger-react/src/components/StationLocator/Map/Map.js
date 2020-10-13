@@ -20,7 +20,7 @@ const Map = ({
     >
       {stations.map((station) => (
         <Marker
-          key={station.id}
+          key={station.stationId}
           latitude={station.latitude}
           longitude={station.longitude}
         >

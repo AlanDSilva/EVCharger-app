@@ -30,19 +30,21 @@ const List = ({
         {stations.map((station) => (
           <div
             className={classes.item}
-            key={station.id}
+            key={station.stationId}
             onClick={() => handleClick(station)}
           >
             <ListItem
               station={station}
               selected={
-                selectedStation ? selectedStation.id === station.id : null
+                selectedStation
+                  ? selectedStation.stationId === station.stationId
+                  : null
               }
               distance={
                 userLocation ? getDistance(station).toFixed(2) + "km" : ""
               }
               chargers={chargers.filter(
-                (charger) => charger.station_id === station.id
+                (charger) => charger.stationId === station.stationId
               )}
             />
           </div>

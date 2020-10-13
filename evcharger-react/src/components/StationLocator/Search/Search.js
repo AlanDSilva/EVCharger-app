@@ -36,8 +36,8 @@ const Search = (props) => {
       elementConfig: {
         options: [
           { value: "", displayValue: "Availability..." },
-          { value: "false", displayValue: "Available" },
-          { value: "true", displayValue: "Busy" },
+          { value: "0", displayValue: "Available" },
+          { value: "1", displayValue: "Busy" },
         ],
       },
       value: "",
