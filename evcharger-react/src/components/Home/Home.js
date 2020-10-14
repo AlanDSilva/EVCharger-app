@@ -8,11 +8,6 @@ const Home = () => {
       <div>
         <h2 className={classes.message}>This is the home page</h2>
       </div>
-      <div>
-        <h2 className={classes.message}>
-          <Button btnType="success">Browse our locations</Button>
-        </h2>
-      </div>
     </div>
   );
 };
