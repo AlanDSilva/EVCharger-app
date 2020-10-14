@@ -46,6 +46,15 @@ Promise.all([
         email VARCHAR(100) NOT NULL,
         password VARCHAR(255) NOT NULL
     )`),
+  db.query(`CREATE TABLE IF NOT EXISTS receipt(
+    receiptId INT AUTO_INCREMENT PRIMARY KEY,
+    total FLOAT NOT NULL,
+    date VARCHAR(255) NOT NULL,
+    userId VARCHAR(255) NOT NULL,
+    chargerId VARCHAR(4) NOT NULL,
+    FOREIGN KEY (userId) REFERENCES user(userId) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (chargerId) REFERENCES charger(chargerId) ON UPDATE CASCADE ON DELETE CASCADE
+  )`),
 ])
   .then(() => {
     console.log("database initialized");

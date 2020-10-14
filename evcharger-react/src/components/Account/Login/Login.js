@@ -41,6 +41,7 @@ const Login = (props) => {
       .then((result) => {
         props.loginSuccess(Auth.getAxiosAuth());
         props.history.push(props.redirectPathOnSuccess);
+        console.log(result);
       })
       .catch(() => {
         props.loginFail();

@@ -100,8 +100,12 @@ router.get("/:chargerId", (req, res) => {
 router.post("/:chargerId", (req, res) => {
   const chargerId = req.params.chargerId;
   db.query("UPDATE charger SET busy = !busy WHERE chargerId = ?", [chargerId])
-    .then((results) => {
-      res.json(results);
+    .then(() => {
+      db.query("SELECT * FROM charger where chargerId = ?", [chargerId]).then(
+        (results) => {
+          res.json(results);
+        }
+      );
     })
     .catch(() => {
       res.sendStatus(500);

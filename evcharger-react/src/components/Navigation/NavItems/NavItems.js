@@ -11,7 +11,7 @@ const NavItems = (props) => (
     <NavItem link="/account">
       {props.isAuthenticated
         ? props.userInfo
-          ? `Logged in as ${props.userInfo.auth.username}`
+          ? `Logged in as ${props.userInfo.auth[0].username}`
           : "Account"
         : "Account"}
     </NavItem>

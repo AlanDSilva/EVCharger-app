@@ -30,13 +30,14 @@ const Charge = (props) => {
     toggle(null);
   };
   const continueModalHandler = () => {
-    console.log(Auth.getAxiosAuth().auth.id);
+    console.log(Auth.getAxiosAuth().auth[0].userId);
     setViewModal(false);
     const newReceipt = {
       total: props.total,
-      user_id: Auth.getAxiosAuth().auth.id,
-      charger_id: chargeInput.value,
+      userId: Auth.getAxiosAuth().auth[0].userId,
+      chargerId: chargeInput.value,
     };
+    console.log(newReceipt);
     axios
       .post("http://localhost:3001/receipts/", newReceipt)
       .then((response) => {
@@ -59,8 +60,7 @@ const Charge = (props) => {
       axios
         .post(`http://localhost:3001/chargers/${chargeInput.value}`)
         .then((response) => {
-          toggle(response.data.price);
-          console.log(response.data);
+          toggle(response.data[0].price);
         });
     }
   };
@@ -82,12 +82,12 @@ const Charge = (props) => {
     if (rules.required) {
       isValid = value.trim() !== "" && isValid;
     }
+    console.log(isValid);
 
     isValid =
-      chargers.find(
-        (charger) => charger.id === value && charger.busy === false
-      ) && isValid;
+      chargers.find((charger) => charger.chargerId === value) && isValid;
 
+    console.log(isValid);
     return isValid;
   };
 
