@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 
 router.use(bodyParser.json());
 
-// DUMMY DATA
+// // DUMMY DATA
 // const stationData = [
 //   { city: "Oulu", latitude: 65.0121, longitude: 25.4651 },
 //   { city: "Oulu", latitude: 65.013, longitude: 25.4645 },
@@ -32,7 +32,7 @@ router.use(bodyParser.json());
 //   { city: "Helsinki", latitude: 60.1699, longitude: 24.9384 },
 // ];
 
-// ONLY FOR POPULATING DATABASE WITH ABOVE DUMMY DATA
+// //ONLY FOR POPULATING DATABASE WITH ABOVE DUMMY DATA
 // router.post("/", (req, res) => {
 //   stationData.map((station) => {
 //     db.query("INSERT INTO station(city, latitude, longitude) VALUES (?,?,?)", [

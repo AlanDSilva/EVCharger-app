@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Auth from "../../ProtectedRoute/Auth";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
+import Notification from "../../UI/Notification/Notification";
 
 const Signup = (props) => {
+  const [errorMessage, setErrorMessage] = useState(null);
   const [signupForm, setSignupForm] = useState({
     name: {
       elementType: "input",
@@ -59,8 +61,12 @@ const Signup = (props) => {
         props.loginSuccess(Auth.getAxiosAuth());
         props.history.push(props.redirectPathOnSuccess);
       })
-      .catch((error) => {
+      .catch(() => {
         props.loginFail();
+        setErrorMessage(`The username is already taken. Try another one`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
       });
   };
 
@@ -121,7 +127,7 @@ const Signup = (props) => {
 
   return (
     <div>
-      <h1>Signup page</h1>
+      <Notification message={errorMessage} />
       <p>Please fill the bellow form to register</p>
       {form}
     </div>

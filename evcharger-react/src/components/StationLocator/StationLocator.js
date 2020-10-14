@@ -88,6 +88,7 @@ const ChargerLocator = (props) => {
             userLocation={userLocation}
             changeHandler={viewportChangeHandler}
             stations={matched}
+            chargers={matchedChargers}
             clickHandler={markerClickHandler}
             closeHandler={closePopupHandler}
             geoHandler={handleGeolocationChange}

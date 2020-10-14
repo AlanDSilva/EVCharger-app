@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./App.css";
 import { Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import StationLocator from "./components/StationLocator/StationLocator";
 import Charge from "./components/Charge/Charge";
 import Account from "./components/Account/Account";
+import Home from "./components/Home/Home";
 
 function App() {
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -81,6 +83,7 @@ function App() {
   return (
     <div className="App">
       <Layout isAuthenticated={isAuthenticated} userInfo={userInfo}>
+        <Route exact path="/" render={() => <Home />} />
         <Route
           path="/locator"
           render={() => (

@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Auth from "../../ProtectedRoute/Auth";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
+import Notification from "../../UI/Notification/Notification";
 
 const Login = (props) => {
+  const [errorMessage, setErrorMessage] = useState(null);
   const [loginForm, setLoginForm] = useState({
     name: {
       elementType: "input",
@@ -45,6 +47,10 @@ const Login = (props) => {
       })
       .catch(() => {
         props.loginFail();
+        setErrorMessage(`The username and/or password provided are wrong`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
       });
   };
 
@@ -106,7 +112,7 @@ const Login = (props) => {
 
   return (
     <div>
-      <h1>Login</h1>
+      <Notification message={errorMessage} />
       <div>Please give your username and password to login</div>
 
       {form}

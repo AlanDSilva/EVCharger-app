@@ -42,8 +42,8 @@ Promise.all([
         )`),
   db.query(`CREATE TABLE IF NOT EXISTS user(
         userId VARCHAR(255) PRIMARY KEY,
-        username VARCHAR(20) NOT NULL,
-        email VARCHAR(100) NOT NULL,
+        username VARCHAR(255) UNIQUE NOT NULL,
+        email VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL
     )`),
   db.query(`CREATE TABLE IF NOT EXISTS receipt(

@@ -53,7 +53,7 @@ router.use(bodyParser.json());
 //   { id: "AA35", type: "slow", price: 0, busy: false, station_id: 16 },
 // ];
 
-//ONLY FOR POPULATING DATABASE WITH ABOVE DUMMY DATA
+// //ONLY FOR POPULATING DATABASE WITH ABOVE DUMMY DATA
 // router.post("/", (req, res) => {
 //   chargerData.map((charger) => {
 //     db.query(

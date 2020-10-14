@@ -116,11 +116,6 @@ const Charge = (props) => {
           ? "*You need to be logged in to start charging"
           : ""}
       </p>
-      <p className={classes.error}>
-        {!chargeInput.valid
-          ? "*You need to provide an available charger code"
-          : ""}
-      </p>
     </form>
   );
 
